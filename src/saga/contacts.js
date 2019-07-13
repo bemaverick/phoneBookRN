@@ -1,11 +1,12 @@
-import { TYPES } from './constants';
-import { makeRequest } from './helpers'
-import { fetchContactsSuccess, fetchContactsError } from './actions'
+import { TYPES } from './../constants';
+import { getFirebaseContacts } from './../helpers'
+import { fetchContactsSuccess, fetchContactsError } from './../actions'
 import { call, put, takeEvery } from 'redux-saga/effects';
 
 function* fetchConfig(action) {
+  console.log("action", action)
   try {
-    const data = yield call(makeRequest, 'https://jsonplaceholder.typicode.com/todos');
+    const data = yield call(getFirebaseContacts, 'https://jsonplaceholder.typicode.com/todos');
     yield put(fetchContactsSuccess(data));
   } catch (error) {
     yield put(fetchContactsError(error));

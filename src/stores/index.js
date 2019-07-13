@@ -6,13 +6,13 @@ import app from '../reducers';
 
 
 // importing your root saga
-import dataSaga from '../sagas';
+import rootSaga from '../saga/contacts';
 
 // creating saga middleware instance
 const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore() {
   const store = createStore(app, applyMiddleware(sagaMiddleware)); //configuring saga
-  sagaMiddleware.run(dataSaga);
+  sagaMiddleware.run(rootSaga);
   return store;
 }

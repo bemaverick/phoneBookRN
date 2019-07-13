@@ -17,3 +17,10 @@ export function fetchContactsError(payload) {
     payload
   };
 }
+
+export function setCurrentContact(itemId: string) {
+  return {
+    type: TYPES.SET_CURRENT_CONTACT,
+    payload: itemId
+  };
+}

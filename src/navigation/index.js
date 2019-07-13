@@ -3,15 +3,60 @@ import { createBottomTabNavigator, createAppContainer, createStackNavigator } fr
 import AntDesIcon from "react-native-vector-icons/AntDesign"
 
 import ContactsMain from "../containers/ContactsMain";
-import Contact from "../containers/Contact";
+import ContactCreate from "../containers/ContactCreate";
+import ContactProfile from "../containers/ContactProfile";
+
+
+import { COLORS } from "../constants/colors";
 
 const ContactStack = createStackNavigator({
   ContactsMain: {
     screen: ContactsMain,
     navigationOptions: {
-      title: "sad"
+      title: "Contact List",
+      headerStyle: {
+        backgroundColor: COLORS.primaryLight,
+      },
+      headerTitleStyle: {
+        letterSpacing: 1
+      }
+    }
+  },
+  ContactProfile: {
+    screen: ContactProfile,
+    navigationOptions: {
+      header: null,
+      headerBackTitle: null,
+    }
+  },
+  ContactEdit: {
+    screen: ContactCreate,
+    navigationOptions: {
+      title: "Edit",
+      headerStyle: {
+        backgroundColor: COLORS.primaryLight,
+      },
+      headerTintColor: COLORS.black08,
+      headerTitleStyle: {
+        letterSpacing: 1
+      }
     }
   }
+});
+
+const ContactCreateStack = createStackNavigator({
+  ContactCreate: {
+    screen: ContactCreate,
+    navigationOptions: {
+      title: "Create Contact",
+      headerStyle: {
+        backgroundColor: COLORS.primaryLight,
+      },
+      headerTitleStyle: {
+        letterSpacing: 1
+      }
+    }
+  },
 });
 
 const RootNavigator = createBottomTabNavigator({
@@ -19,17 +64,25 @@ const RootNavigator = createBottomTabNavigator({
     screen: ContactStack,
     navigationOptions: {
       title: "Contacts",
-      tabBarIcon: () => (
-        <AntDesIcon name="contacts" color="black" size={20} />
+      tabBarIcon: ({ focused }) => (
+        <AntDesIcon
+          name="contacts"
+          color={ focused ? COLORS.black : COLORS.black06 }
+          size={ focused ? 20 : 18 }
+        />
       ),
     }
   },
   Contact: {
-    screen: ContactsMain,
+    screen: ContactCreateStack,
     navigationOptions: {
-      title: "Contacts",
-      tabBarIcon: () => (
-        <AntDesIcon name="contacts" color="black" size={20} />
+      title: "Create",
+      tabBarIcon: ({ focused }) => (
+        <AntDesIcon
+          name="adduser"
+          color={ focused ? COLORS.black : COLORS.black06}
+          size={ focused ? 20 : 18 }
+        />
       ),
     }
   },
@@ -37,17 +90,15 @@ const RootNavigator = createBottomTabNavigator({
 }, {
   initialRouteName: "ContactsMain",
   tabBarOptions: {
-    activeTintColor: '#000',
+    activeTintColor: COLORS.black,
+    inactiveTintColor: COLORS.black06,
     labelStyle: {
       fontSize: 12,
     },
     style: {
-     // backgroundColor: CO,
+      backgroundColor: COLORS.primaryLight,
     },
   }
 });
-
-
-
 
 export default createAppContainer(RootNavigator);

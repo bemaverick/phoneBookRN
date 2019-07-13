@@ -6,13 +6,8 @@
  * @flow
  */
 
-import React, { Fragment } from 'react';
+import React  from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
   StatusBar,
 } from 'react-native';
 import { Provider } from 'react-redux';
@@ -20,15 +15,16 @@ import { Provider } from 'react-redux';
 import configureStore from './stores'
 import RootNavigator from "./navigation";
 
+import { COLORS } from "./constants/colors";
+
 const store = configureStore();
 
 const App = () => {
-  console.log(store.getState());
   return (
     <Provider store={store}>
+      <StatusBar backgroundColor={COLORS.primaryLight} barStyle="dark-content" />
       <RootNavigator />
     </Provider>
-
   );
 };
 
