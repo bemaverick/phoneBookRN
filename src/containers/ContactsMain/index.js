@@ -8,26 +8,29 @@
 
 import React, { Component } from 'react';
 import {
-  ActivityIndicator,
-  FlatList,
   View,
-  Text,
+  FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux'
 
 import ContactItem from "../../components/ContactItem";
 import SearchInput from "../../components/SearchInput";
+import EmptyBlock from "../../components/EmptyBlock";
 
 
 import { fetchContacts, setCurrentContact } from '../../actions';
 
 import type { _t_props, _t_state } from "./flow";
+import { TEXT_INPUT, COMMON } from "../../constants/dictionary";
 import { COLORS } from "../../constants/colors";
 import styles from "./styles";
 
 const mapStateToProps = (state) => {
   return {
-    contact: state,
+    contacts: state.contacts,
+    contactsIds: state.contactsIds,
+    isFetchingContacts: state.isFetchingContacts
   };
 };
 
@@ -45,7 +48,7 @@ class ContactsMain extends Component<_t_props, _t_state> {
   };
 
   componentDidMount(): void {
-    this.props.fetchContacts();
+    this.props.fetchContacts()
   }
 
   onChaneText = (text: string) => {
@@ -73,16 +76,17 @@ class ContactsMain extends Component<_t_props, _t_state> {
   };
 
   renderListEmptyComponent = () => {
-    if (this.props.contact.isFetching) {
+    if (this.props.isFetchingContacts) {
       return <ActivityIndicator size="large" color={COLORS.primaryDark} />
     }
     return (
-      <Text style={{ textAlign: "center", paddingVertical: 20 }}>No results</Text>
+      <EmptyBlock text={COMMON.NO_RESULTS} />
     )
   };
 
   render() {
-    const { contacts, contactsIds } = this.props.contact;
+    const { contacts, contactsIds } = this.props;
+    console.log(contacts, contactsIds)
     const { searchText } = this.state;
     const data = contactsIds.filter(
       (itemId: string) => (
@@ -96,7 +100,7 @@ class ContactsMain extends Component<_t_props, _t_state> {
           onChangeText={this.onChaneText}
           onPressClose={() => this.onChaneText("")}
           value={searchText}
-          placeholder={"Search"}
+          placeholder={TEXT_INPUT.SEARCH}
           maxLength={20}
         />
         <FlatList
@@ -106,7 +110,6 @@ class ContactsMain extends Component<_t_props, _t_state> {
           keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
           ListEmptyComponent={this.renderListEmptyComponent}
-          removeClippedSubviews
           initialNumToRender={15}
         />
       </View>

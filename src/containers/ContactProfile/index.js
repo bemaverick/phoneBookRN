@@ -13,6 +13,8 @@ import {
 import { connect } from "react-redux";
 
 import ButtonC from "../../components/ButtonC";
+import TextInputC from "../../components/TextInputC";
+
 import ProfileAvatarBlock from "../../components/ProfileAvatarBlock";
 import { getUserInitials } from "../../helpers";
 
@@ -32,7 +34,7 @@ class ContactProfile extends Component {
 
   edit = () => {
     this.props.navigation.navigate("ContactEdit")
-  }
+  };
 
   render() {
     const { currentContact } = this.props;
@@ -46,6 +48,11 @@ class ContactProfile extends Component {
         />
         <View style={styles.bottomBlock}>
           <View style={styles.phoneBlock}>
+            <TextInputC
+              iconName="phone"
+              value={currentContact.number}
+              editable={false}
+            />
           </View>
           <ButtonC
             onPress={this.edit}

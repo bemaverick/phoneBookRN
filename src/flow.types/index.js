@@ -1,6 +1,6 @@
-export type _t_contactsMain_state = {
-  searchText: string
-}
-
-export type _t_contactsMain_props = {
+export type _t_contactItem = {
+  firstName: string,
+  lastName: string,
+  number: string,
+  isFavorite?: "true" | "false"
 }

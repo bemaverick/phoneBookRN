@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, PixelRatio } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 import { COLORS } from "../../constants/colors";
 const { height } = Dimensions.get("window");
@@ -15,7 +15,7 @@ export default styles = StyleSheet.create({
     height: height / 4,
     borderRadius: height / 8,
     backgroundColor: COLORS.primaryDark,
-    borderWidth: 2 / PixelRatio.get(),
+    borderWidth: 2,
     borderColor: COLORS.white,
     justifyContent: "center",
     alignItems: "center"

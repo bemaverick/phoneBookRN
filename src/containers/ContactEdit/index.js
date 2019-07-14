@@ -9,40 +9,29 @@
 import React, { Component } from 'react';
 import {
   View,
-  Platform,
-  Keyboard,
   KeyboardAvoidingView,
 } from 'react-native';
-import { connect } from  "react-redux";
+import { connect } from "react-redux";
 
 import TextInputC from "../../components/TextInputC";
 import ButtonC from "../../components/ButtonC";
 import Avatar from "../../components/Avatar";
 
-import { sendContact } from "../../actions";
-import { getUserInitials } from "../../helpers";
-
-
+import { TEXT_INPUT, BUTTON } from "../../constants/dictionary";
 import styles from "./styles";
+import {getUserInitials} from "../../helpers";
 
 const mapStateToProps = (state) => {
   return {
-    isCreating: state.isCreating
+    currentContact: state.currentContact,
   };
 };
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    sendContact: (contact, callBack) => dispatch(sendContact(contact, callBack)),
-    setCurrentContact: (itemId: string) => dispatch(setCurrentContact(itemId))
-  };
-};
-class ContactCreate extends Component {
+class ContactEdit extends Component {
 
   state = {
-    firstName: "",
-    lastName: "",
-    number: ""
+    firstName: this.props.currentContact.firstName || "",
+    lastName: this.props.currentContact.lastName || "",
+    number:  this.props.currentContact.number || "",
   };
 
   onChange = (text: string, field: string) => {
@@ -52,32 +41,15 @@ class ContactCreate extends Component {
   };
 
   cancel = () => {
-    Keyboard.dismiss();
-    this.setState(() => ({
-      firstName: "",
-      lastName: "",
-      number: ""
-    }));
-    this.props.navigation.navigate("ContactsMain");
-  };
-
-  create = () => {
-    const {
-      firstName, lastName, number
-    } = this.state;
-    this.props.sendContact({
-      number,
-      firstName,
-      lastName,
-    }, this.cancel)
+    this.props.navigation.popToTop();
   };
 
   render() {
+    const { currentContact } = this.props;
     const {
       firstName, lastName, number
     } = this.state;
     const fio = `${firstName} ${lastName}`;
-
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={64}>
         <View style={styles.row}>
@@ -86,14 +58,13 @@ class ContactCreate extends Component {
             <TextInputC
               onChangeText={(text) => this.onChange(text, "firstName")}
               value={firstName}
-              placeholder="First Name"
+              placeholder={TEXT_INPUT.FIRST_NAME}
               containerStyle={styles.input}
             />
             <TextInputC
               onChangeText={(text) => this.onChange(text, "lastName")}
               value={lastName}
-              placeholder="Last Name"
-
+              placeholder={TEXT_INPUT.LAST_NAME}
             />
           </View>
         </View>
@@ -102,22 +73,21 @@ class ContactCreate extends Component {
             <TextInputC
               onChangeText={(text) => this.onChange(text, "number")}
               value={number}
+              placeholder={TEXT_INPUT.PHONE}
               keyboardType="phone-pad"
-              placeholder="Phone"
               iconName="phone"
               maxLength={16}
             />
           </View>
           <ButtonC
-            onPress={this.create}
-            title={"Create"}
-            isLoading={this.props.isCreating}
+            onPress={() => null}
+            title={BUTTON.SAVE}
             customStyle={styles.createButton}
 
           />
           <ButtonC
             onPress={this.cancel}
-            title={"Cancel"}
+            title={BUTTON.CANCEL}
             customStyle={styles.backButton}
             textStyle={styles.backButtonText}
           />
@@ -129,5 +99,4 @@ class ContactCreate extends Component {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(ContactCreate)
+)(ContactEdit)

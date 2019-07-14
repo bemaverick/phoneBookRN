@@ -4,13 +4,15 @@
  */
 
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import styles from './styles';
+import { Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { COLORS } from "../../constants/colors";
 
+import styles from './styles';
 
 type _t_props = {
   title: string,
   onPress: () => void,
+  isLoading: boolean,
   customStyle?: {
     marginBottom?: number
   },
@@ -19,8 +21,9 @@ type _t_props = {
   },
 };
 const ButtonC = (props: _t_props) => {
+  const Wrap = props.isLoading ? View : TouchableOpacity;
   return (
-    <TouchableOpacity
+    <Wrap
       onPress={props.onPress}
       activeOpacite={0.8}
       style={[
@@ -28,12 +31,19 @@ const ButtonC = (props: _t_props) => {
         props.customStyle,
       ]}
     >
-      <Text
-        style={[styles.text, props.textStyle]}
-      >
-        {props.title}
-      </Text>
-    </TouchableOpacity>
+      {
+        props.isLoading ? (
+          <ActivityIndicator color={COLORS.white} />
+        ) : (
+          <Text
+            style={[styles.text, props.textStyle]}
+          >
+            {props.title}
+          </Text>
+        )
+      }
+
+    </Wrap>
   )
 };
 export default ButtonC;

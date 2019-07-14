@@ -4,6 +4,7 @@ import AntDesIcon from "react-native-vector-icons/AntDesign"
 
 import ContactsMain from "../containers/ContactsMain";
 import ContactCreate from "../containers/ContactCreate";
+import ContactEdit from "../containers/ContactEdit";
 import ContactProfile from "../containers/ContactProfile";
 
 
@@ -30,7 +31,7 @@ const ContactStack = createStackNavigator({
     }
   },
   ContactEdit: {
-    screen: ContactCreate,
+    screen: ContactEdit,
     navigationOptions: {
       title: "Edit",
       headerStyle: {

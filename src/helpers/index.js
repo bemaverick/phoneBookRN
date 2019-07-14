@@ -36,3 +36,28 @@ export function getFirebaseContacts(url: string) {
       });
   });
 }
+
+export function createFirebaseContact(contact) {
+  return new Promise((resolve, reject) => {
+    fetch("https://armwrestling-chat.firebaseio.com/contacts.json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contact)
+    })
+      .then(response => response.json())
+      .then((res) => {
+        console.log("res", res);
+        resolve(res);
+      })
+      .catch((err) => {
+        console.log("Error createFirebaseContact", err);
+        reject();
+      });
+  });
+}
+
+export function customAction() {
+  alert();
+}

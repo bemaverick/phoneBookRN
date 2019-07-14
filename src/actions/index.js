@@ -24,3 +24,28 @@ export function setCurrentContact(itemId: string) {
     payload: itemId
   };
 }
+
+export function sendContact(contact, callBack) {
+  return {
+    type: TYPES.SEND_CONTACT,
+    payload: {
+      contact,
+      callBack
+    }
+  }
+}
+
+export function sendContactSuccess(payload) {
+  return {
+    type: TYPES.SEND_CONTACT_SUCCESS,
+    payload: payload
+  }
+}
+
+export function sendContactError(payload) {
+  return {
+    type: TYPES.SEND_CONTACT_FAILURE,
+    payload: payload
+  }
+}
+

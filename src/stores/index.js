@@ -6,7 +6,7 @@ import app from '../reducers';
 
 
 // importing your root saga
-import rootSaga from '../saga/contacts';
+import rootSaga from '../saga';
 
 // creating saga middleware instance
 const sagaMiddleware = createSagaMiddleware();
