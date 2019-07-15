@@ -19,6 +19,7 @@ import ButtonC from "../../components/ButtonC";
 import { sendContact } from "../../actions";
 
 import type { _t_action } from "./flow";
+import { BUTTON } from "../../constants/dictionary";
 import styles from "./styles";
 
 const mapStateToProps = (state) => {
@@ -66,10 +67,11 @@ class ContactCreate extends Component {
           initialValues={this.initialValues}
           isLoading={isCreating}
           onSubmit={(values, actions) => this.create(values, actions)}
+          submitText={BUTTON.CREATE}
         />
         <ButtonC
           onPress={() => this.cancel()}
-          title={"Cancel"}
+          title={BUTTON.CANCEL}
           customStyle={styles.backButton}
           textStyle={styles.backButtonText}
         />

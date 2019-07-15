@@ -12,7 +12,7 @@ import styles from './styles';
 type _t_props = {
   title: string,
   onPress: () => void,
-  isLoading: boolean,
+  isLoading?: boolean,
   customStyle?: {
     marginBottom?: number
   },

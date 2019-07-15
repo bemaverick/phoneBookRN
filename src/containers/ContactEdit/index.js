@@ -8,90 +8,65 @@
 
 import React, { Component } from 'react';
 import {
-  View,
   KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from "react-redux";
 
-import TextInputC from "../../components/TextInputC";
+import ContactForm from "../../components/ContactForm";
 import ButtonC from "../../components/ButtonC";
-import Avatar from "../../components/Avatar";
+
+import { editContact } from "../../actions";
 
 import { TEXT_INPUT, BUTTON } from "../../constants/dictionary";
+import type {_t_action} from "../ContactCreate/flow";
 import styles from "./styles";
-import {getUserInitials} from "../../helpers";
+
 
 const mapStateToProps = (state) => {
   return {
     currentContact: state.currentContact,
+    isUpdating: state.isUpdating
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    editContact: (contact, callBack) => dispatch((editContact(contact, callBack))),
   };
 };
 class ContactEdit extends Component {
-
-  state = {
-    firstName: this.props.currentContact.firstName || "",
-    lastName: this.props.currentContact.lastName || "",
-    number:  this.props.currentContact.number || "",
-  };
-
-  onChange = (text: string, field: string) => {
-    this.setState(() => ({
-      [field]: text
-    }))
-  };
 
   cancel = () => {
     this.props.navigation.popToTop();
   };
 
+  save = (values, actions: _t_action) => {
+    this.props.editContact({
+      ...values,
+      id: this.props.currentContact.id
+    }, () => this.cancel(actions))
+  };
+
   render() {
-    const { currentContact } = this.props;
-    const {
-      firstName, lastName, number
-    } = this.state;
-    const fio = `${firstName} ${lastName}`;
+    const { currentContact, isUpdating } = this.props;
+
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={64}>
-        <View style={styles.row}>
-          <Avatar text={getUserInitials(fio)} />
-          <View style={styles.fioBlock}>
-            <TextInputC
-              onChangeText={(text) => this.onChange(text, "firstName")}
-              value={firstName}
-              placeholder={TEXT_INPUT.FIRST_NAME}
-              containerStyle={styles.input}
-            />
-            <TextInputC
-              onChangeText={(text) => this.onChange(text, "lastName")}
-              value={lastName}
-              placeholder={TEXT_INPUT.LAST_NAME}
-            />
-          </View>
-        </View>
-        <View style={styles.bottomBlock}>
-          <View style={styles.phoneBlock}>
-            <TextInputC
-              onChangeText={(text) => this.onChange(text, "number")}
-              value={number}
-              placeholder={TEXT_INPUT.PHONE}
-              keyboardType="phone-pad"
-              iconName="phone"
-              maxLength={16}
-            />
-          </View>
-          <ButtonC
-            onPress={() => null}
-            title={BUTTON.SAVE}
-            customStyle={styles.createButton}
-
-          />
-          <ButtonC
-            onPress={this.cancel}
-            title={BUTTON.CANCEL}
-            customStyle={styles.backButton}
-            textStyle={styles.backButtonText}
-          />
-          </View>
+        <ContactForm
+          initialValues={{
+            firstName: currentContact.firstName || "",
+            lastName: currentContact.lastName || "",
+            number: currentContact.number || ""
+          }}
+          onSubmit={(values, actions) => this.save(values, actions)}
+          isLoading={isUpdating}
+          submitText={BUTTON.SAVE}
+        />
+        <ButtonC
+          onPress={this.cancel}
+          title={BUTTON.CANCEL}
+          customStyle={styles.backButton}
+          textStyle={styles.backButtonText}
+        />
       </KeyboardAvoidingView>
     )
   }
@@ -99,4 +74,5 @@ class ContactEdit extends Component {
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProps
 )(ContactEdit)

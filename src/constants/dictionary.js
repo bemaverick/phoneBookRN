@@ -9,7 +9,7 @@ export const TEXT_INPUT = {
   FIRST_NAME: "First Name",
   LAST_NAME: "Last Name",
   SEARCH: "search",
-  PHONE: "Phone"
+  PHONE: "Phone Number"
 };
 
 export const COMMON = {
@@ -21,4 +21,8 @@ export const TITLES = {
   EDIT_CONTACT: "Edit contact",
   CREATE_CONTACT: "Create Contact",
   CREATE: "Create",
+};
+
+export const ERRORS = {
+  COMMON: "oops something went wrong"
 };

@@ -18,8 +18,8 @@ import ContactItem from "../../components/ContactItem";
 import SearchInput from "../../components/SearchInput";
 import EmptyBlock from "../../components/EmptyBlock";
 
-
 import { fetchContacts, setCurrentContact } from '../../actions';
+import { filterContactsByFio } from "../../helpers";
 
 import type { _t_props, _t_state } from "./flow";
 import { TEXT_INPUT, COMMON } from "../../constants/dictionary";
@@ -30,7 +30,8 @@ const mapStateToProps = (state) => {
   return {
     contacts: state.contacts,
     contactsIds: state.contactsIds,
-    isFetchingContacts: state.isFetchingContacts
+    isFetchingContacts: state.isFetchingContacts,
+    errorFetching: state.errorFetching
   };
 };
 
@@ -48,13 +49,18 @@ class ContactsMain extends Component<_t_props, _t_state> {
   };
 
   componentDidMount(): void {
-    this.props.fetchContacts()
+    this.props.fetchContacts();
   }
 
   onChaneText = (text: string) => {
     this.setState(() => ({
       searchText: text
     }));
+  };
+
+  goToProfile = (itemId: string) => {
+    this.props.setCurrentContact(itemId);
+    this.props.navigation.navigate("ContactProfile");
   };
 
   keyExtractor = (item: string) => {
@@ -70,29 +76,20 @@ class ContactsMain extends Component<_t_props, _t_state> {
     )
   };
 
-  goToProfile = (itemId: string) => {
-    this.props.setCurrentContact(itemId);
-    this.props.navigation.navigate("ContactProfile");
-  };
-
   renderListEmptyComponent = () => {
-    if (this.props.isFetchingContacts) {
+    const { isFetchingContacts, errorFetching } = this.props;
+    if (isFetchingContacts) {
       return <ActivityIndicator size="large" color={COLORS.primaryDark} />
     }
     return (
-      <EmptyBlock text={COMMON.NO_RESULTS} />
+      <EmptyBlock text={errorFetching || COMMON.NO_RESULTS} />
     )
   };
 
   render() {
-    const { contacts, contactsIds } = this.props;
     const { searchText } = this.state;
-    const data = contactsIds.filter(
-      (itemId: string) => (
-        contacts[itemId].firstName.toLowerCase().includes(searchText.toLowerCase())
-        || contacts[itemId].lastName.toLowerCase().includes(searchText.toLowerCase())
-        || `${contacts[itemId].firstName}${contacts[itemId].lastName}`.toLowerCase().includes(searchText.replace(/\s/g, '').toLowerCase())
-    ));
+    const { contacts, contactsIds } = this.props;
+    const data = filterContactsByFio(contacts, contactsIds, searchText);
     return (
       <View style={styles.container}>
         <SearchInput

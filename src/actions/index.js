@@ -1,11 +1,16 @@
 import { TYPES } from '../constants';
+import type { _t_contactItem } from "../flow.types";
+
+type _t_contacts = {
+  [key: string]: _t_contactItem
+}
 
 export function fetchContacts() {
   return {
     type: TYPES.FETCHING_CONTACTS
   };
 }
-export function fetchContactsSuccess(payload) {
+export function fetchContactsSuccess(payload: _t_contacts ) {
   return {
     type: TYPES.FETCHING_CONTACTS_SUCCESS,
     payload
@@ -45,6 +50,30 @@ export function sendContactSuccess(payload) {
 export function sendContactError(payload) {
   return {
     type: TYPES.SEND_CONTACT_FAILURE,
+    payload: payload
+  }
+}
+
+export function editContact(contact, callBack) {
+  return {
+    type: TYPES.EDIT_CONTACT,
+    payload: {
+      contact,
+      callBack
+    }
+  }
+}
+
+export function editContactSuccess(payload) {
+  return {
+    type: TYPES.EDIT_CONTACT_SUCCESS,
+    payload: payload
+  }
+}
+
+export function editContactError(payload) {
+  return {
+    type: TYPES.EDIT_CONTACT_FAILURE,
     payload: payload
   }
 }

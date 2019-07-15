@@ -1,18 +1,7 @@
 import { TYPES } from '../constants'
-import type { _t_contactItem } from "../flow.types";
+import { ERRORS } from "../constants/dictionary";
+import type { _t_initialState } from "./flow";
 
-
-type _t_initialState = {
-  contacts: {} | {
-    [key: string]: _t_contactItem
-  },
-  contactsIds: Array<?string>,
-  isFetchingContacts: boolean,
-  currentContact: ?_t_contactItem,
-  errorFetching: string,
-  isCreating: boolean,
-  newContact: null | _t_contactItem,
-}
 
 const initialState: _t_initialState = {
   contacts: {},
@@ -20,41 +9,45 @@ const initialState: _t_initialState = {
   isFetchingContacts: false,
   currentContact: null,
   errorFetching: "",
-  isCreating: false,
   newContact: null,
+  isCreating: false,
+  errorCreating: "",
+  editedContact: null,
+  isUpdating: false,
+  errorUpdating: ""
 };
-
 export default function dataReducer (state: _t_initialState = initialState, action) {
   switch (action.type) {
     case TYPES.FETCHING_CONTACTS:
-      console.log( TYPES.FETCHING_CONTACTS)
-
       return {
         ...state,
         isFetchingContacts: true
       };
-    case TYPES.FETCHING_CONTACTS_SUCCESS:
-      console.log( TYPES.FETCHING_CONTACTS_SUCCESS)
-
+    case TYPES.FETCHING_CONTACTS_SUCCESS: {
+      const contactsObject = action.payload || {};
       return {
         ...state,
         isFetchingContacts: false,
+        errorFetching: "",
         contacts: action.payload,
-        contactsIds: Object.keys(action.payload || {})
-          .sort((a, b) => (action.payload[a].firstName.localeCompare(action.payload[b].firstName)))
+        contactsIds: Object.keys(contactsObject)
+          .sort((a, b) => (contactsObject[a].firstName.localeCompare(contactsObject[b].firstName)))
       };
-    case TYPES.FETCHING_CONTACTS_FAILURE:
-      console.log( TYPES.FETCHING_CONTACTS_FAILURE)
+    }
 
+    case TYPES.FETCHING_CONTACTS_FAILURE:
       return {
         ...state,
         isFetchingContacts: false,
-        error: true
+        errorFetching: ERRORS.COMMON
       };
     case TYPES.SET_CURRENT_CONTACT:
       return {
         ...state,
-        currentContact: state.contacts[action.payload]
+        currentContact: {
+          ...state.contacts[action.payload],
+          id: action.payload
+        }
       };
     case TYPES.SEND_CONTACT:
       console.log( TYPES.SEND_CONTACT, action)
@@ -83,6 +76,38 @@ export default function dataReducer (state: _t_initialState = initialState, acti
       console.log( TYPES.SEND_CONTACT_FAILURE)
       return {
         ...state,
+        isCreating: false
+      };
+    case TYPES.EDIT_CONTACT:
+      console.log( TYPES.EDIT_CONTACT)
+      return {
+        ...state,
+        newContact: {
+          ...action.payload.contact
+        },
+        isUpdating: true
+      };
+    case TYPES.EDIT_CONTACT_SUCCESS: {
+      console.log( TYPES.EDIT_CONTACT_SUCCESS, action.payload)
+      const updatedContacts = {
+        ...state.contacts,
+        [state.newContact.id]: {...state.newContact}
+      };
+      return {
+        ...state,
+        contacts: updatedContacts,
+        contactsIds: state.contactsIds
+          .sort((a, b) => (updatedContacts[a].firstName.localeCompare(updatedContacts[b].firstName))),
+        newContact: null,
+        isUpdating: false
+      };
+    }
+    case TYPES.EDIT_CONTACT_FAILURE:
+      console.log( TYPES.EDIT_CONTACT_FAILURE);
+      return {
+        ...state,
+        newContact: null,
+        isUpdating: false
       };
     default:
       return state
