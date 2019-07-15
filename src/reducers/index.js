@@ -1,5 +1,5 @@
-import { TYPES } from '../constants'
 import { ERRORS } from "../constants/dictionary";
+import { TYPES } from '../constants'
 import type { _t_initialState } from "./flow";
 
 
@@ -57,7 +57,7 @@ export default function dataReducer (state: _t_initialState = initialState, acti
           ...action.payload.contact
         }
       };
-    case TYPES.SEND_CONTACT_SUCCESS:
+    case TYPES.SEND_CONTACT_SUCCESS: {
       const updatedContacts = { [action.payload.name]: state.newContact, ...state.contacts };
 
       return {
@@ -70,6 +70,7 @@ export default function dataReducer (state: _t_initialState = initialState, acti
         isCreating: false,
         errorCreating: ""
       };
+    }
     case TYPES.SEND_CONTACT_FAILURE:
       return {
         ...state,
