@@ -50,7 +50,6 @@ export default function dataReducer (state: _t_initialState = initialState, acti
         }
       };
     case TYPES.SEND_CONTACT:
-      console.log( TYPES.SEND_CONTACT, action)
       return {
         ...state,
         isCreating: true,
@@ -59,8 +58,6 @@ export default function dataReducer (state: _t_initialState = initialState, acti
         }
       };
     case TYPES.SEND_CONTACT_SUCCESS:
-      console.log( TYPES.SEND_CONTACT_SUCCESS)
-
       const updatedContacts = { [action.payload.name]: state.newContact, ...state.contacts };
 
       return {
@@ -70,16 +67,16 @@ export default function dataReducer (state: _t_initialState = initialState, acti
           .sort((a, b) => (updatedContacts[a].firstName.localeCompare(updatedContacts[b].firstName)))
         ,
         newContact: null,
-        isCreating: false
+        isCreating: false,
+        errorCreating: ""
       };
     case TYPES.SEND_CONTACT_FAILURE:
-      console.log( TYPES.SEND_CONTACT_FAILURE)
       return {
         ...state,
-        isCreating: false
+        isCreating: false,
+        errorCreating: ERRORS.COMMON
       };
     case TYPES.EDIT_CONTACT:
-      console.log( TYPES.EDIT_CONTACT)
       return {
         ...state,
         newContact: {
@@ -88,7 +85,6 @@ export default function dataReducer (state: _t_initialState = initialState, acti
         isUpdating: true
       };
     case TYPES.EDIT_CONTACT_SUCCESS: {
-      console.log( TYPES.EDIT_CONTACT_SUCCESS, action.payload)
       const updatedContacts = {
         ...state.contacts,
         [state.newContact.id]: {...state.newContact}
@@ -99,15 +95,16 @@ export default function dataReducer (state: _t_initialState = initialState, acti
         contactsIds: state.contactsIds
           .sort((a, b) => (updatedContacts[a].firstName.localeCompare(updatedContacts[b].firstName))),
         newContact: null,
-        isUpdating: false
+        isUpdating: false,
+        errorUpdating: ""
       };
     }
     case TYPES.EDIT_CONTACT_FAILURE:
-      console.log( TYPES.EDIT_CONTACT_FAILURE);
       return {
         ...state,
         newContact: null,
-        isUpdating: false
+        isUpdating: false,
+        errorUpdating: ERRORS.COMMON
       };
     default:
       return state

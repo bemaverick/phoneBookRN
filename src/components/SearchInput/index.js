@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React  from 'react';
 import {
   View,
   TextInput,
@@ -14,12 +14,18 @@ import {
 } from 'react-native';
 import IonIcon from "react-native-vector-icons/Ionicons"
 
-import styles from "./styles";
 import { COLORS } from "../../constants/colors";
+import styles from "./styles";
 
+type _t_props = {
+  onPressClose: () => void,
+  onChangeText: (text: string) => string,
+  value: string,
+  placeholder?: string,
+  maxLength?: number
+}
 
-
-const SearchInput = (props) => {
+const SearchInput = (props: _t_props) => {
   return (
     <View style={styles.container}>
       <TextInput

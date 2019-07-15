@@ -10,7 +10,7 @@ export function fetchContacts() {
     type: TYPES.FETCHING_CONTACTS
   };
 }
-export function fetchContactsSuccess(payload: _t_contacts ) {
+export function fetchContactsSuccess(payload: _t_contacts) {
   return {
     type: TYPES.FETCHING_CONTACTS_SUCCESS,
     payload
@@ -30,7 +30,7 @@ export function setCurrentContact(itemId: string) {
   };
 }
 
-export function sendContact(contact, callBack) {
+export function sendContact(contact: _t_contactItem, callBack: Function) {
   return {
     type: TYPES.SEND_CONTACT,
     payload: {
@@ -40,7 +40,7 @@ export function sendContact(contact, callBack) {
   }
 }
 
-export function sendContactSuccess(payload) {
+export function sendContactSuccess(payload: { name: string }) {
   return {
     type: TYPES.SEND_CONTACT_SUCCESS,
     payload: payload
@@ -54,7 +54,7 @@ export function sendContactError(payload) {
   }
 }
 
-export function editContact(contact, callBack) {
+export function editContact(contact: _t_contactItem, callBack: Function) {
   return {
     type: TYPES.EDIT_CONTACT,
     payload: {
@@ -64,7 +64,7 @@ export function editContact(contact, callBack) {
   }
 }
 
-export function editContactSuccess(payload) {
+export function editContactSuccess(payload: _t_contactItem) {
   return {
     type: TYPES.EDIT_CONTACT_SUCCESS,
     payload: payload

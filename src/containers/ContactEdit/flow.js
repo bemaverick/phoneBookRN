@@ -1,8 +1,9 @@
-import type {_t_contactItem} from "../../flow.types";
+import type { _t_contactItem } from "../../flow.types";
 
 export type _t_props = {
-  isCreating: boolean,
-  sendContact: (contact: _t_contactItem, callback: Function) => void
+  currentContact: _t_contactItem,
+  isUpdating: boolean,
+  editContact: (contact: _t_contactItem, callback: Function) => void
 }
 
 export type _t_action = {

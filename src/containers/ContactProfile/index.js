@@ -14,10 +14,13 @@ import { connect } from "react-redux";
 
 import ButtonC from "../../components/ButtonC";
 import TextInputC from "../../components/TextInputC";
-
 import ProfileAvatarBlock from "../../components/ProfileAvatarBlock";
+
 import { getUserInitials } from "../../helpers";
 
+import { _t_props } from "./flow";
+
+import { BUTTON } from "../../constants/dictionary";
 import styles from "./styles";
 
 const mapStateToProps = (state) => {
@@ -26,7 +29,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class ContactProfile extends Component {
+class ContactProfile extends Component<_t_props> {
 
   goBack = () => {
     this.props.navigation.goBack();
@@ -56,12 +59,12 @@ class ContactProfile extends Component {
           </View>
           <ButtonC
             onPress={this.edit}
-            title={"Edit"}
+            title={BUTTON.EDIT}
             customStyle={styles.editButton}
           />
           <ButtonC
             onPress={this.goBack}
-            title={"Back"}
+            title={BUTTON.BACK}
             customStyle={styles.backButton}
             textStyle={styles.backButtonText}
           />

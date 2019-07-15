@@ -1,16 +1,16 @@
 import React from "react";
-import { KeyboardAvoidingView, View } from "react-native";
+import { View } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import ButtonC from "../../components/ButtonC";
 import Avatar from "../Avatar";
-import { getUserInitials } from "../../helpers";
+import ButtonC from "../../components/ButtonC";
 import TextInputC from "../TextInputC";
+
+import { getUserInitials } from "../../helpers";
 
 import { TEXT_INPUT } from "../../constants/dictionary";
 import styles from "./styles";
-
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().label(TEXT_INPUT.FIRST_NAME).min(2),
@@ -28,13 +28,13 @@ type _t_props = {
   isLoading: boolean,
   submitText: string
 }
+// TODO refactor TextInputC for using in Formic (move some logic to component)
 
 export default (props: _t_props) => (
   <Formik
     initialValues={props.initialValues}
     onSubmit={(values, actions) => {
       props.onSubmit(values, actions);
-      console.log(actions)
     }}
     validationSchema={validationSchema}
   >
@@ -51,7 +51,6 @@ export default (props: _t_props) => (
               errorText={formikProps.touched.firstName && formikProps.errors.firstName}
               autoFocus
               containerStyle={styles.input}
-
             />
             <TextInputC
               placeholder={TEXT_INPUT.LAST_NAME}
@@ -83,8 +82,6 @@ export default (props: _t_props) => (
           customStyle={styles.createButton}
         />
       </React.Fragment>
-
-
     )}
   </Formik>
 

@@ -6,19 +6,26 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React  from 'react';
 import {
   View,
   Text,
   TouchableOpacity
 } from 'react-native';
 import { connect } from "react-redux";
+
 import { getUserInitials } from "../../helpers";
+
+import type {_t_contactItem} from "../../flow.types";
+
 import styles from "./styles";
 
+type _t_props = {
+  item: _t_contactItem,
+  contactId: string
+}
 
-
-const ItemList = (props) => {
+const ItemList = (props: _t_props) => {
   const fio = `${props.item.firstName || ""} ${props.item.lastName || ""}`;
   return (
     <TouchableOpacity

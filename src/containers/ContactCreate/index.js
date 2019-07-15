@@ -18,7 +18,9 @@ import ButtonC from "../../components/ButtonC";
 
 import { sendContact } from "../../actions";
 
-import type { _t_action } from "./flow";
+import type {_t_contactItem} from "../../flow.types";
+import type { _t_action, _t_props } from "./flow";
+
 import { BUTTON } from "../../constants/dictionary";
 import styles from "./styles";
 
@@ -33,9 +35,9 @@ const mapDispatchToProps = (dispatch) => {
     sendContact: (contact, callBack) => dispatch(sendContact(contact, callBack)),
   };
 };
-class ContactCreate extends Component {
+class ContactCreate extends Component<_t_props> {
 
-  initialValues = {
+  initialValues: _t_contactItem = {
     firstName: "",
     lastName: "",
     number: ""

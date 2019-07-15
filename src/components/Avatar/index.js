@@ -21,9 +21,13 @@ type _t_props = {
 const Avatar = (props: _t_props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        {props.text}
-      </Text>
+      {
+        !!props.text && (
+          <Text style={styles.text}>
+            {props.text}
+          </Text>
+        )
+      }
     </View>
   )
 };

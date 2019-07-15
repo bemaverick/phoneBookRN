@@ -17,8 +17,10 @@ import ButtonC from "../../components/ButtonC";
 
 import { editContact } from "../../actions";
 
-import { TEXT_INPUT, BUTTON } from "../../constants/dictionary";
-import type {_t_action} from "../ContactCreate/flow";
+import type { _t_contactItem } from "../../flow.types";
+import type { _t_action, _t_props } from "./flow";
+
+import { BUTTON } from "../../constants/dictionary";
 import styles from "./styles";
 
 
@@ -33,17 +35,17 @@ const mapDispatchToProps = (dispatch) => {
     editContact: (contact, callBack) => dispatch((editContact(contact, callBack))),
   };
 };
-class ContactEdit extends Component {
+class ContactEdit extends Component<_t_props> {
 
   cancel = () => {
     this.props.navigation.popToTop();
   };
 
-  save = (values, actions: _t_action) => {
+  save = (values: _t_contactItem, actions: _t_action) => {
     this.props.editContact({
       ...values,
       id: this.props.currentContact.id
-    }, () => this.cancel(actions))
+    }, () => this.cancel())
   };
 
   render() {

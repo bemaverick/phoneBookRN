@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { Fragment } from 'react';
+import React  from 'react';
 import {
   View,
   Text,
@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import FeatherIcon from "react-native-vector-icons/Feather"
 
+import { COLORS } from "../../constants/colors";
 import styles from "./styles";
-import {COLORS} from "../../constants/colors";
 
 const getIcon = (iconName: string) => {
   let icon = null;
@@ -35,7 +35,11 @@ type _t_props = {
     margin?: number,
   },
   iconName?: string,
-  errorText?: string
+  errorText?: string,
+  onChangeText: (text: string) => string,
+  value: string,
+  placeholder?: string,
+  maxLength?: number
 }
 
 const TextInputC = (props: _t_props) => {
@@ -60,7 +64,7 @@ const TextInputC = (props: _t_props) => {
       {
         !!props.errorText && (
           <Text numberOfLines={1} style={styles.error}>
-            {props.errorText || "asdasd dadasdas"}
+            {props.errorText}
           </Text>
         )
       }

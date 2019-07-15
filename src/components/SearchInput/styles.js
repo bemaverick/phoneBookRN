@@ -1,4 +1,4 @@
-import { StyleSheet, PixelRatio } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { COLORS } from "../../constants/colors";
 
@@ -7,7 +7,6 @@ export default styles = StyleSheet.create({
     backgroundColor: COLORS.primaryLight,
     height: 40,
     justifyContent: "center",
-   // borderBottomWidth: 2 / PixelRatio.get(),
     paddingHorizontal: 16
   },
   textInput: {

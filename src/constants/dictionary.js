@@ -3,6 +3,7 @@ export const BUTTON = {
   CREATE: "CREATE",
   SAVE: "SAVE",
   BACK: "BACK",
+  EDIT: "EDIT"
 };
 
 export const TEXT_INPUT = {
