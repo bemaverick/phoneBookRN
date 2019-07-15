@@ -2,6 +2,7 @@ export const BUTTON = {
   CANCEL: "CANCEL",
   CREATE: "CREATE",
   SAVE: "SAVE",
+  BACK: "BACK",
 };
 
 export const TEXT_INPUT = {
@@ -16,5 +17,8 @@ export const COMMON = {
 };
 
 export const TITLES = {
-
+  CONTACTS: "Contacts",
+  EDIT_CONTACT: "Edit contact",
+  CREATE_CONTACT: "Create Contact",
+  CREATE: "Create",
 };

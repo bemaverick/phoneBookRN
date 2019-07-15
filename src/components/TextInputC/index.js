@@ -6,9 +6,10 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import {
   View,
+  Text,
   TextInput,
 } from 'react-native';
 import FeatherIcon from "react-native-vector-icons/Feather"
@@ -33,27 +34,38 @@ type _t_props = {
   containerStyle?: {
     margin?: number,
   },
-  iconName?: string
+  iconName?: string,
+  errorText?: string
 }
 
 const TextInputC = (props: _t_props) => {
   const { iconName } = props;
   return (
-    <View style={[styles.container, props.containerStyle]}>
+    <View style={[props.containerStyle]}>
+      <View style={styles.container}>
+        {
+          !!iconName && (
+            <View style={styles.iconBlock}>
+              {getIcon(iconName)}
+            </View>
+          )
+        }
+        <TextInput
+          autoCompleteType="off"
+          autoCorrect={false}
+          style={styles.textInput}
+          {...props}
+        />
+      </View>
       {
-        !!iconName && (
-          <View style={styles.iconBlock}>
-            {getIcon(iconName)}
-          </View>
+        !!props.errorText && (
+          <Text numberOfLines={1} style={styles.error}>
+            {props.errorText || "asdasd dadasdas"}
+          </Text>
         )
       }
-      <TextInput
-        autoCompleteType="off"
-        autoCorrect={false}
-        style={styles.textInput}
-        {...props}
-      />
     </View>
+
   )
 };
 

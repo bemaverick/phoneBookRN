@@ -21,5 +21,10 @@ export default styles = StyleSheet.create({
     borderBottomWidth: 1 / PixelRatio.get(),
     borderBottomColor: COLORS.black06
   },
+  error: {
+    fontSize: 13,
+    color: COLORS.customRed,
+    paddingVertical: 5
+  }
 
 });

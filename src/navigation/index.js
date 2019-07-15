@@ -7,14 +7,14 @@ import ContactCreate from "../containers/ContactCreate";
 import ContactEdit from "../containers/ContactEdit";
 import ContactProfile from "../containers/ContactProfile";
 
-
+import { TITLES } from "../constants/dictionary";
 import { COLORS } from "../constants/colors";
 
 const ContactStack = createStackNavigator({
   ContactsMain: {
     screen: ContactsMain,
     navigationOptions: {
-      title: "Contact List",
+      title: TITLES.CONTACTS,
       headerStyle: {
         backgroundColor: COLORS.primaryLight,
       },
@@ -33,7 +33,7 @@ const ContactStack = createStackNavigator({
   ContactEdit: {
     screen: ContactEdit,
     navigationOptions: {
-      title: "Edit",
+      title: TITLES.EDIT_CONTACT,
       headerStyle: {
         backgroundColor: COLORS.primaryLight,
       },
@@ -49,7 +49,7 @@ const ContactCreateStack = createStackNavigator({
   ContactCreate: {
     screen: ContactCreate,
     navigationOptions: {
-      title: "Create Contact",
+      title: TITLES.CREATE_CONTACT,
       headerStyle: {
         backgroundColor: COLORS.primaryLight,
       },
@@ -61,10 +61,10 @@ const ContactCreateStack = createStackNavigator({
 });
 
 const RootNavigator = createBottomTabNavigator({
-  ContactsMain: {
+  Contacts: {
     screen: ContactStack,
     navigationOptions: {
-      title: "Contacts",
+      title: TITLES.CONTACTS,
       tabBarIcon: ({ focused }) => (
         <AntDesIcon
           name="contacts"
@@ -77,7 +77,7 @@ const RootNavigator = createBottomTabNavigator({
   Contact: {
     screen: ContactCreateStack,
     navigationOptions: {
-      title: "Create",
+      title: TITLES.CREATE,
       tabBarIcon: ({ focused }) => (
         <AntDesIcon
           name="adduser"
@@ -89,7 +89,7 @@ const RootNavigator = createBottomTabNavigator({
   },
 
 }, {
-  initialRouteName: "ContactsMain",
+  initialRouteName: "Contacts",
   tabBarOptions: {
     activeTintColor: COLORS.black,
     inactiveTintColor: COLORS.black06,

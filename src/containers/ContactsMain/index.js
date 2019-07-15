@@ -86,7 +86,6 @@ class ContactsMain extends Component<_t_props, _t_state> {
 
   render() {
     const { contacts, contactsIds } = this.props;
-    console.log(contacts, contactsIds)
     const { searchText } = this.state;
     const data = contactsIds.filter(
       (itemId: string) => (
